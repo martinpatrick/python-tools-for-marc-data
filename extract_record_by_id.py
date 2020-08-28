@@ -17,7 +17,7 @@ if kind == "NOT":
         vList = list(reader)
 
         marcreader = MARCReader(open(marcname, 'rb'), to_unicode=True, force_utf8=True)
-        marcwriter = MARCWriter(open('recs_extracted_from' + new_marcname + '.mrc', 'wb'))
+        marcwriter = MARCWriter(open('recs_extracted_from_' + new_marcname + '.mrc', 'wb'))
         if identifier == "001":
             for rec in marcreader:
                 field001 = rec['001']
@@ -48,7 +48,7 @@ else:
         vList = list(reader)
 
         marcreader = MARCReader(open(marcname, 'rb'), to_unicode=True, force_utf8=True)
-        marcwriter = MARCWriter(open('recs_extracted_from' + new_marcname + '.mrc', 'wb'))
+        marcwriter = MARCWriter(open('recs_extracted_from_' + new_marcname + '.mrc', 'wb'))
         if identifier == "001":
             for rec in marcreader:
                 field001 = rec['001']
