@@ -8,3 +8,5 @@
 **oclc extractor.ipynb** will extract to a csv and pkl file the OCLC#s present in the records in the file. This file lets you choose whether the OCLC numbers are stored in the 001 (that is, you just downloaded these files directly from OCLC or another vendor who supplies OCLC#s in the 001 field) or the 035, such as directly from Alma.
 
 **id_marc_problem.py** script has been copied from https://github.umn.edu/trail001. The jupyter notebooks here will fail if they encounter an unicode character in the indicators of a field in a record. This script allows you to find the record that is problematic. Please read the comments at the head of the file closely. I have occasionally run into problems when using the MARC Edit OCLC bib file reader plugin to extract large amounts of records from OCLC with this problem and needed to use this script to clean them up.
+
+**get_current_ocn.py** this script takes a file of just oclc numbers and looks that up against worldcat search api to get the oclc current primary record number. you'll need a production wskey from oclc for this to work properly.
