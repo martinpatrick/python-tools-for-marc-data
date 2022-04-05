@@ -1,7 +1,7 @@
 # python_marc_extractors
  Various python scripts and notebooks to extract MARC data
 
-**extract_record_by_id.py** will extract records from a given mrc file based on a list of identifiers for 001 or 035 to a new mrc file. I got frustrated with the relative clunk of MarcEdit's implementation of the file search feature in the extract records function, so I wrote a little script to do it for me for identifiers. This could someday be expanded to include ISBNs or ISSNs. The list you feed it should be one column only with each identifier on its own line.
+**extract_record_by_id.py** will extract records from a given mrc file based on a list of identifiers for 001 or 035 to a new mrc file. I got frustrated with the relative clunk of MarcEdit's implementation of the file search feature in the extract records function, so I wrote a little script to do it for me for identifiers. This could someday be expanded to include ISBNs or ISSNs. The list you feed it should be one column only with each identifier on its own line and no header.
 
 **issn extractor.ipynb** will extract to a csv and pkl file the issns present in the records in the file.
 
