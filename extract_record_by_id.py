@@ -12,64 +12,64 @@ kind = input("Do you want to extract records on your list or not on your list? (
 
 
 if kind == "NOT":
-    with open(csvname, newline='') as f:
-        reader = csv.reader(f)
-        vList = list(reader)
+	with open(csvname, newline='') as f:
+		reader = csv.reader(f)
+		vList = list(reader)
 
-        marcreader = MARCReader(open(marcname, 'rb'), to_unicode=True, force_utf8=True)
-        marcwriter = MARCWriter(open('recs_extracted_from_' + new_marcname + '.mrc', 'wb'))
-        if identifier == "001":
-            for rec in marcreader:
-                field001 = rec['001']
-                f001 = re.sub("=001  ", "", str(field001))
-                try:
-                    found = vList.index([f001])
-                    continue
-                except ValueError:
-                    marcwriter.write(rec)
+		marcreader = MARCReader(open(marcname, 'rb'), to_unicode=True, force_utf8=True)
+		marcwriter = MARCWriter(open('recs_extracted_from_' + new_marcname + '.mrc', 'wb'))
+		if identifier == "001":
+			for rec in marcreader:
+				field001 = rec['001']
+				f001 = re.sub("=001	 ", "", str(field001))
+				try:
+					found = vList.index([f001])
+					continue
+				except ValueError:
+					marcwriter.write(rec)
 
-            marcwriter.close()
-        else: #elif identifier == "035":
-            for rec in marcreader:
-                field035 = rec['035']
-                for field in field035:
-                    suba035 = field.get_subfields("a")
-                    for suba in suba035:
-                        try:
-                            found = vList.index([f001])
-                            marcwriter.write(rec)
-                        except ValueError:
-                            continue
+			marcwriter.close()
+		else: #elif identifier == "035":
+			for rec in marcreader:
+				field035 = rec.get_fields("035")
+				for field in field035:
+					suba035 = field.get_subfields("a")
+					for suba in suba035:
+						try:
+							found = vList.index([suba])
+							marcwriter.write(rec)
+						except ValueError:
+							continue
 
-        marcwriter.close()
+		marcwriter.close()
 else:
-    with open(csvname, newline='') as f:
-        reader = csv.reader(f)
-        vList = list(reader)
+	with open(csvname, newline='') as f:
+		reader = csv.reader(f)
+		vList = list(reader)
 
-        marcreader = MARCReader(open(marcname, 'rb'), to_unicode=True, force_utf8=True)
-        marcwriter = MARCWriter(open('recs_extracted_from_' + new_marcname + '.mrc', 'wb'))
-        if identifier == "001":
-            for rec in marcreader:
-                field001 = rec['001']
-                f001 = re.sub("=001  ", "", str(field001))
-                try:
-                    found = vList.index([f001])
-                    marcwriter.write(rec)
-                except ValueError:
-                    continue
+		marcreader = MARCReader(open(marcname, 'rb'), to_unicode=True, force_utf8=True)
+		marcwriter = MARCWriter(open('recs_extracted_from_' + new_marcname + '.mrc', 'wb'))
+		if identifier == "001":
+			for rec in marcreader:
+				field001 = rec['001']
+				f001 = re.sub("=001	 ", "", str(field001))
+				try:
+					found = vList.index([f001])
+					marcwriter.write(rec)
+				except ValueError:
+					continue
 
-            marcwriter.close()
-        else: #elif identifier == "035":
-            for rec in marcreader:
-                field035 = rec['035']
-                for field in field035:
-                    suba035 = field.get_subfields("a")
-                    for suba in suba035:
-                        try:
-                            found = vList.index([f001])
-                            marcwriter.write(rec)
-                        except ValueError:
-                            continue
+			marcwriter.close()
+		else: #elif identifier == "035":
+			for rec in marcreader:
+				field035 = rec.get_fields("035")
+				for field in field035:
+					suba035 = field.get_subfields("a")
+					for suba in suba035:
+						try:
+							found = vList.index([suba])
+							marcwriter.write(rec)
+						except ValueError:
+							continue
 
-        marcwriter.close()
+		marcwriter.close()
