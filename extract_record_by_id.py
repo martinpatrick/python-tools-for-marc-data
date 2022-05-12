@@ -15,7 +15,7 @@ if kind == "NOT":
 	with open(csvname, newline='') as f:
 		reader = csv.reader(f)
 		vList = list(reader)
-
+		#print(vList)
 		read_records = MARCReader(open(marcname, 'rb'), to_unicode=True, force_utf8=True)
 		write_records = MARCWriter(open('recs_extracted_from_' + new_marcname + '.mrc', 'wb'))
 		if identifier == "001":
@@ -24,21 +24,21 @@ if kind == "NOT":
 				f001 = re.sub("=001	 ", "", str(field001))
 				try:
 					found = vList.index([f001])
-					write_records.write(rec)
-				except ValueError:
 					continue
+				except ValueError:
+					write_records.write(rec)
 
 		else: #elif identifier == "035":
-			for rec in marcreader:
+			for rec in read_records:
 				field035 = rec.get_fields("035")
 				for field in field035:
 					suba035 = field.get_subfields("a")
 					for suba in suba035:
 						try:
 							found = vList.index([suba])
-							write_records.write(rec)
-						except ValueError:
 							continue
+						except ValueError:
+							write_records.write(rec)
 
 
 else:
@@ -60,7 +60,7 @@ else:
 
 
 		elif identifier == "035":
-			for rec in marcreader:
+			for rec in read_records:
 				field035 = rec.get_fields("035")
 				for field in field035:
 					suba035 = field.get_subfields("a")
@@ -71,7 +71,7 @@ else:
 						except ValueError:
 							continue
 		elif identifier == "020":
-			for rec in marcreader:
+			for rec in read_records:
 				field020 = rec.get_fields("020")
 				for field in field020:
 					suba020 = field.get_subfields("a")
