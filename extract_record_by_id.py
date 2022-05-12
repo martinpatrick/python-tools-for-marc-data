@@ -16,19 +16,18 @@ if kind == "NOT":
 		reader = csv.reader(f)
 		vList = list(reader)
 
-		marcreader = MARCReader(open(marcname, 'rb'), to_unicode=True, force_utf8=True)
-		marcwriter = MARCWriter(open('recs_extracted_from_' + new_marcname + '.mrc', 'wb'))
+		read_records = MARCReader(open(marcname, 'rb'), to_unicode=True, force_utf8=True)
+		write_records = MARCWriter(open('recs_extracted_from_' + new_marcname + '.mrc', 'wb'))
 		if identifier == "001":
-			for rec in marcreader:
+			for rec in read_records:
 				field001 = rec['001']
 				f001 = re.sub("=001	 ", "", str(field001))
 				try:
 					found = vList.index([f001])
-					continue
+					write_records.write(rec)
 				except ValueError:
-					marcwriter.write(rec)
+					continue
 
-			marcwriter.close()
 		else: #elif identifier == "035":
 			for rec in marcreader:
 				field035 = rec.get_fields("035")
@@ -37,30 +36,30 @@ if kind == "NOT":
 					for suba in suba035:
 						try:
 							found = vList.index([suba])
-							marcwriter.write(rec)
+							write_records.write(rec)
 						except ValueError:
 							continue
 
-		marcwriter.close()
+
 else:
 	with open(csvname, newline='') as f:
 		reader = csv.reader(f)
 		vList = list(reader)
 
-		marcreader = MARCReader(open(marcname, 'rb'), to_unicode=True, force_utf8=True)
-		marcwriter = MARCWriter(open('recs_extracted_from_' + new_marcname + '.mrc', 'wb'))
+		read_records = MARCReader(open(marcname, 'rb'), to_unicode=True, force_utf8=True)
+		write_records = MARCWriter(open('recs_extracted_from_' + new_marcname + '.mrc', 'wb'))
 		if identifier == "001":
-			for rec in marcreader:
+			for rec in read_records:
 				field001 = rec['001']
-				f001 = re.sub("=001	 ", "", str(field001))
+				f001 = re.sub("=001  ", "", str(field001))
 				try:
 					found = vList.index([f001])
-					marcwriter.write(rec)
+					write_records.write(rec)
 				except ValueError:
 					continue
 
-			marcwriter.close()
-		else: #elif identifier == "035":
+
+		elif identifier == "035":
 			for rec in marcreader:
 				field035 = rec.get_fields("035")
 				for field in field035:
@@ -68,8 +67,20 @@ else:
 					for suba in suba035:
 						try:
 							found = vList.index([suba])
-							marcwriter.write(rec)
+							write_records.write(rec)
+						except ValueError:
+							continue
+		elif identifier == "020":
+			for rec in marcreader:
+				field020 = rec.get_fields("020")
+				for field in field020:
+					suba020 = field.get_subfields("a")
+					#regex here to only look at the actual numbers
+					for suba in suba020:
+						try:
+							found = vList.index([suba])
+							write_records.write(rec)
 						except ValueError:
 							continue
 
-		marcwriter.close()
+
