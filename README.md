@@ -12,3 +12,5 @@
 **get_current_ocn.py** this script takes a file of just oclc numbers and looks that up against worldcat search api to get the oclc current primary record number. you'll need a production wskey from oclc for this to work properly. i haven't built in anything to handle timeouts.
 
 **xml_barcode_file_split.py** this script takes a single .mrc file of records with barcode stored in $5 of a 954 field, and generates one file per record converted to marcxml with the filename as {barcode}.xml.
+
+**convertalephid.py** this script takes a file of old identifiers and new identifiers and uses python dictionary to find old ID in a record and repalce with the new identifier. script can be edited for different fields or subfields as needed.
